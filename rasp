@@ -1,0 +1,74 @@
+import pygame
+from pygame.locals import *
+import ctypes, os
+import time
+import RPi.GPIO as GPIO
+
+GPIO.setmode(IO.BOARD) #Sets mode to IO "not pulse width modulation PWM"
+GpioNum = [4, 17, 27, 22, 9, 5, 6, 13]
+
+for x in xrange(0, 7):
+    print(str(x) + ": " + str(GpioNum[x]) + "\n")
+print("Los gehts!!!")
+
+for x in xrange(0, 7):
+	GPIO.setup(GpioNum[x], OUTPUT)
+
+pygame.init()
+windowSurface = pygame.display.set_mode((100, 100), 0, 32)
+BLACK = (0,0,0)
+windowSurface.fill(BLACK)
+
+deltaTime = []
+for x in xrange(0, 7):
+	delatTime.append(0)
+
+#millis = int(round(time.time() * 1000))
+
+while(True):
+	for event in pygame.event.get():
+		if event.type == QUIT:
+			pygame.quit()
+			sys.exit()
+		if event.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                break
+            
+			if event.key == K_0:
+				print("1 - button" + "Gpio4")
+				GPIO.output(GpioNum[0], 1)
+                delaTime[0] = int(round(time.time()))
+            if event.key == K_1:
+                print("2 - button" + "Gpio17")
+                GPIO.output(GpioNum[1], 1)
+                delaTime[1] = int(round(time.time()))
+            if event.key == K_2:
+                print("3 - button" + "Gpio27")
+                GPIO.output(GpioNum[2], 1)
+                delaTime[2] = int(round(time.time()))
+            if event.key == K_3:
+                print("4 - button" + "Gpio22")
+                GPIO.output(GpioNum[3], 1)
+                delaTime[3] = int(round(time.time()))
+            if event.key == K_4:
+                print("5 - button" + "Gpio9")
+                GPIO.output(GpioNum[4], 1)
+                delaTime[4] = int(round(time.time()))
+            if event.key == K_5:
+                print("6 - button" + "Gpio5")
+                GPIO.output(GpioNum[5], 1)
+                delaTime[5] = int(round(time.time()))
+            if event.key == K_6:
+                print("7 - button" + "Gpio6")
+                GPIO.output(GpioNum[6], 1)
+                delaTime[6] = int(round(time.time()))
+            if event.key == K_7:
+                print("8 - button" + "Gpio13")
+                GPIO.output(GpioNum[7], 1)
+                delaTime[7] = int(round(time.time()))
+
+
+	for x in xrange(0, 7):	
+		if int(round(time.time() * 1000)) - deltaTime[x] >= 15:
+            GPIO.output(GpioNum[x], 0)
+            deltaTime[x] = 0
